@@ -1,0 +1,146 @@
+resume_job_description_prompt = """
+Act as an advanced ATS (Applicant Tracking System) evaluator with expertise in analyzing resumes for technical and competitive roles in fields like:
+- Software Engineering
+- Data Science
+- Data Analysis
+- Big Data Engineering
+- Software Testing
+- DevOps
+- Cloud Engineering
+- Cybersecurity
+- Machine Learning Engineering
+- AI Engineering
+- Blockchain Engineering
+- Quantum Computing
+- Full Stack Development
+- Frontend Development
+- Backend Development
+- Mobile Development
+- Game Development
+- Web Development
+
+Evaluate the provided resume against the given job description, considering:
+1. Keyword and skill alignment.
+2. Relevance of experience and achievements to the job requirements.
+3. Overall compatibility with the job description based on ATS criteria.
+
+Perform the following analysis and respond in the specified JSON format:
+
+### Inputs:
+- Resume: {resume_text}
+- Job Description: {job_description}
+
+### Output JSON Format:
+{
+    "JD Match": "percentage between 0-100",
+    "MissingKeywords": ["keyword1", "keyword2", ...],
+    "Profile Summary": "Provide a detailed evaluation of how well the resume aligns with the job description, highlighting strengths, gaps, and specific improvement suggestions to optimize ATS performance."
+}
+
+### Guidelines for Analysis:
+- **JD Match**: Use semantic similarity techniques to calculate a compatibility percentage between the resume and the job description.
+- **Missing Keywords**: Extract critical skills, tools, or technologies mentioned in the job description but absent in the resume.
+- **Profile Summary**: Include an overview of the alignment between the candidate’s profile and job requirements, such as relevant skills, achievements, and areas needing enhancement.
+
+Make your response clear, actionable, and tailored to a highly competitive job market.
+"""
+
+cover_letter_prompt = '''
+You are an expert in creating professional and impactful cover letters tailored to specific job roles. Using the provided resume data, job description, and company name, craft a personalized and compelling cover letter that highlights the candidate's strengths, relevant experience, and alignment with the job requirements.
+
+### Inputs:
+- **Resume Data**: {resume_text}
+- **Job Description**: {job_description}
+- **Company Name**: {company_name}
+
+### Instructions:
+1. Start the cover letter with a formal salutation addressed to the hiring manager or company (use "Dear Hiring Manager" if unspecified).
+2. In the introduction:
+   - State the job role being applied for.
+   - Briefly express enthusiasm for the position and the company.
+   - Provide a short description of the company, highlighting its values, mission, or achievements if known. If no information is available, skip this step.
+3. In the body:
+   - Highlight key accomplishments and experiences from the resume that align with the job description.
+   - Demonstrate knowledge of the company’s goals and how the candidate can contribute to them.
+4. In the conclusion:
+   - Reiterate interest in the role.
+   - Include a polite call to action, such as requesting an interview or offering further discussion.
+   - Close with a professional sign-off (e.g., "Sincerely," or "Best regards,").
+   
+### Output Format:
+The output should be a well-structured and grammatically correct cover letter, ready for submission.
+
+---
+
+Here is the sample draft:
+
+Dear [Hiring Manager/Specific Name if available],
+
+I am excited to apply for the [Job Role if available] position at {company_name}, as advertised in [Job Posting Source/Description if available]. With my background in [Key Expertise or Industry if available], coupled with a proven track record of [Specific Achievement or Skill from Resume if available], I am eager to contribute to {company_name}'s success.
+
+[Optional: A brief sentence about {company_name}, such as its mission, values, or notable achievements, if available. Otherwise, skip this step.]
+
+In my previous role at [Previous Employer/Project if available], I [Specific Accomplishment or Responsibility that aligns with the JD if available]. My experience in [Relevant Skills or Tools if available] has prepared me to excel in [Specific Job Requirement from JD if available].
+
+[Additional paragraph elaborating on alignment with the company's goals, values, or specific projects if available.]
+
+I would welcome the opportunity to discuss how my skills and experiences align with the needs of {company_name}. Thank you for considering my application. I look forward to the possibility of contributing to your team's success.
+
+Sincerely,  
+[Candidate's Name]  
+[Contact Information]  
+
+---
+
+### Guidelines for the Company Section:
+- If information about {company_name} is provided, include a brief and positive description, such as:
+  - “{company_name} is known for its innovative approach in [industry].”
+  - “As a leader in [specific field], {company_name} is dedicated to [mission/goal].”
+- If no information is known , omit this part and continue with the rest of the cover letter.
+
+Make sure the tone is professional yet personable, and emphasize the candidate's unique value to the employer.
+
+'''
+resume_formatting_prompt = """
+Act as an expert in resume evaluation for ATS (Applicant Tracking System) optimization, with a focus on making resumes compliant with best practices for a wide range of professional roles, including technical, managerial, and creative fields. 
+
+Evaluate the provided resume based on the following criteria:
+1. **Font and Format Consistency**:
+   - Check for consistent font styles, sizes, and heading formatting throughout the resume.
+   - Ensure proper use of headings (e.g., Experience, Education, Skills) and subheadings.
+   - Identify any potential formatting issues that might negatively impact ATS readability.
+
+2. **ATS Optimization**:
+   - Evaluate the inclusion of critical keywords for the role based on industry best practices.
+   - Ensure the structure is optimized for ATS, including the use of simple, standard section headings and plain text (no images, tables, or unusual formatting).
+   - Suggest any missing sections, such as a Skills section or certifications, which can be important for ATS.
+
+3. **Content Quality**:
+   - Assess the clarity and impact of the professional summary and experience sections.
+   - Suggest improvements in language (e.g., using stronger action verbs, clear bullet points, concise phrasing).
+   - Check for redundancy and suggest streamlining where necessary.
+
+4. **Relevance to Industry-Specific Requirements**:
+   - Evaluate the alignment of the resume with industry-specific skills and technologies, focusing on the role’s needs.
+
+Provide your analysis in the following JSON format:
+
+### Inputs:
+- Resume: {resume_text}
+
+### Output JSON Format:
+{{
+    "ATS Compatibility Score": "percentage between 0-100",
+    "MissingKeywords": ["keyword1", "keyword2", ...],
+    "Formatting Issues": ["issue1", "issue2", ...],
+    "Profile Summary": "Provide a detailed evaluation of how well the resume aligns with ATS criteria, highlighting strengths, weaknesses, and areas of improvement for optimization."
+}}
+
+### Guidelines for Analysis:
+- **ATS Compatibility Score**: Calculate the percentage of ATS-friendly features in the resume, considering factors like keyword density, simple formatting, and structural consistency.
+- **Missing Keywords**: List critical skills, tools, or technologies that should be included for better ATS compatibility.
+- **Formatting Issues**: Identify any formatting issues that could prevent the resume from being parsed correctly by ATS systems, such as inconsistent headings, font sizes, or the use of tables/images.
+- **Profile Summary**: Provide actionable feedback for improving the resume’s ATS compatibility and content clarity. This may include specific suggestions for enhancing job experience descriptions or restructuring sections for better ATS readability.
+"""
+
+
