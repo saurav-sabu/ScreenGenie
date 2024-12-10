@@ -6,6 +6,4 @@ python-dotenv
 pymupdf4llm
 pyautogen
 autogen-agentchat[gemini]~=0.2
-pypdf
-PyPDF2
-werkzeug
+python-docx
