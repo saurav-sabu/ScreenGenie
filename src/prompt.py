@@ -1,5 +1,7 @@
+# Importing modules
 from langchain_core.prompts import PromptTemplate
 
+# Prompt for resume and job description
 resume_job_description_prompt = """
 Act as an advanced ATS (Applicant Tracking System) evaluator with expertise in analyzing resumes for technical and competitive roles in fields like:
 - Software Engineering
@@ -45,9 +47,12 @@ Perform the following analysis and respond in the specified Markdown format:
 
 Make your response clear, actionable, and tailored to a highly competitive job market.
 """
+
+# Creating a prompt template
 resume_analysis_prompt_template = PromptTemplate(template=resume_job_description_prompt, input_variables=["resume_text", "job_description"])
 
 
+# Prompt for cover letter
 cover_letter_prompt = '''
 You are an expert in creating professional and impactful cover letters tailored to specific job roles. Based on the following details, generate a personalized and compelling cover letter that highlights the candidate's strengths, relevant experience, and alignment with the job requirements.
 
@@ -114,9 +119,11 @@ Make sure the tone is professional yet personable, and emphasize the candidate's
 
 '''
 
+# Creating a prompt template
 cover_letter_prompt_template = PromptTemplate(template=cover_letter_prompt, input_variables=["resume_data","job_description", "company_name","name","job_title"])
 
 
+# Prompt for interview questions
 interview_question_prompt = '''
 You are an expert interviewer skilled in designing personalized and insightful questions. Based on the candidate's resume data and the provided job description, generate a set of interview questions aimed at assessing the candidate’s qualifications, skills, and alignment with the role.
 
@@ -145,10 +152,11 @@ Inputs:
 
 '''
 
+# Creating a prompt template
 interview_question_prompt_template = PromptTemplate(template=interview_question_prompt, input_variables=["resume_data","job_description"])
 
 
-
+# Prompt for resume formatting
 resume_formatting_prompt = """
 Act as an expert in resume evaluation for ATS (Applicant Tracking System) optimization, with a focus on making resumes compliant with best practices for a wide range of professional roles, including technical, managerial, and creative fields. 
 
@@ -187,9 +195,11 @@ Evaluate the provided resume based on the following criteria:
 - **Profile Summary**: Provide actionable feedback for improving the resume’s ATS compatibility and content clarity. This may include specific suggestions for enhancing job experience descriptions or restructuring sections for better ATS readability.
 """
 
+# Creating a prompt template
 resume_formatting_prompt_template = PromptTemplate(template=resume_formatting_prompt, input_variables=["resume_text"])
 
 
+# Prompt for resume generation
 resume_generation_prompt = """
 You are an expert in resume generation for ATS (Applicant Tracking System) optimization, with a focus on making resumes compliant with best practices for a wide range of professional roles, including technical, managerial, and creative fields. 
 
@@ -206,5 +216,6 @@ You are an expert in resume generation for ATS (Applicant Tracking System) optim
     {job_description}
 """
 
+# Creating a prompt template
 resume_generation_prompt_template = PromptTemplate(template=resume_generation_prompt, input_variables=["resume_text","job_description"])
 
