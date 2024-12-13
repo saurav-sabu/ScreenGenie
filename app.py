@@ -241,7 +241,7 @@ elif page == "📞 Contact":
         Have questions or need support? Reach out to us:
         - 📧 Email: saurav.sabu9@gmail.com
         - 📞 Phone: +91-8451842018
-        - 🌐 Website: [www.screengenie.com](https://www.screengenie.com)
+        - 🌐 Website: [www.screengenie.com](https://screengenie.streamlit.app/)
         """
     )
     st.image("Thank.jpg", width=150)
