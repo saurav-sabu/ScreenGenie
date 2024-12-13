@@ -5,10 +5,12 @@ import time
 import random
 from src.cover_letter_generation import get_cover_letter
 from src.resume_analysis import get_resume_analysis
-from src.helper import create_word_document
+from src.helper import create_word_document, initialize_llm_pipeline
 from src.interview_question_generation import get_interview_questions
 from src.ats_formatting import get_ats_formatting_tips
 from src.resume_generation import get_resume_generation
+from langchain_core.messages import  AIMessage,HumanMessage
+
 
 
 # Set the page configuration
@@ -62,7 +64,7 @@ st.markdown(
 
 # Sidebar Navigation
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Go to:", ["🏠 Home", "📄 Resume Analysis", "📝 Cover Letter Generator", "🎨 ATS Formatting", "💬 Interview Question Generator", "🎨 Resume Generation", "❓ FAQs", "📞 Contact"])
+page = st.sidebar.radio("Go to:", ["🏠 Home", "📄 Resume Analysis", "📝 Cover Letter Generator", "🎨 ATS Formatting Tips", "💬 Interview Question Generator", "🎨 Resume Generation", "🤖 CareerBot", "❓ FAQs", "📞 Contact"])
 
 # Header
 st.markdown("<div class='main-header fade-in'>Welcome to ScreenGenie ✨</div>", unsafe_allow_html=True)
@@ -77,15 +79,8 @@ if page == "🏠 Home":
         Use the sidebar to navigate through the app's features!
         """
     )
-    gif_url = "https://media.tenor.com/images/22518735.gif"  # Replace with the direct URL of the GIF
-    st.markdown(
-        f"""
-        <div style="text-align: center;">
-        <img src="{gif_url}" alt="ScreenGenie GIF" style="width:50%; height:auto; border-radius:10px;">
-    </div>
-    """,
-        unsafe_allow_html=True,
-    )
+    gif_url = "genie.gif"  # Replace with the direct URL of the GIF
+    st.image(gif_url, width=300, caption="ScreenGenie GIF",use_container_width=False)
 
 # Resume Analysis Page
 elif page == "📄 Resume Analysis":
@@ -111,6 +106,7 @@ elif page == "📄 Resume Analysis":
                 mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             )
             st.write(response)
+            st.balloons()
 
     elif not job_description:
         st.warning("Please provide the job description for a detailed analysis.")
@@ -143,6 +139,7 @@ elif page == "📝 Cover Letter Generator":
                     file_name="cover_letter.docx",
                     mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                 )
+                st.balloons()
     else:
         st.warning("Please upload your resume for analysis first.")
 
@@ -161,6 +158,7 @@ elif page == "🎨 Resume Generation":
                 file_name="resume_generation.docx",
                 mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             )
+        st.balloons()
 
 elif page == "🤖 Live Interview Simulation":
     st.header("🤖 Live Interview Simulation")
@@ -188,13 +186,6 @@ elif page == "🎨 ATS Formatting Tips":
             ats_formatting_tips = get_ats_formatting_tips(ats_file)
             st.write(ats_formatting_tips)
         st.snow()
-        st.markdown("### 🎉 ATS Optimization Complete!")
-        st.download_button(
-            "📥 Download ATS-Optimized Resume",
-            data=ats_file.getvalue(),
-            file_name=f"ATS_Optimized_{ats_file.name}",
-            mime="application/octet-stream"
-        )
     else:
         st.warning("Please upload your resume for ATS formatting.")
 
@@ -202,28 +193,45 @@ elif page == "🎨 ATS Formatting Tips":
 elif page == "❓ FAQs":
     st.header("❓ Frequently Asked Questions")
     st.markdown("<div class='faq-header'>1. What is ScreenGenie?</div>", unsafe_allow_html=True)
-    st.write("ScreenGenie is an all-in-one platform designed to assist job seekers in their career journey. It offers features like personalized cover letter generation, resume analysis, and tailored interview question preparation to help you stand out in the job market.")
+    st.write("ScreenGenie is an all-in-one platform designed to assist job seekers in their career journey. It offers tools for resume analysis, cover letter generation, ATS-friendly formatting tips, interview question generation, and more.")
 
     st.markdown("<div class='faq-header'>2. Who can use ScreenGenie?</div>", unsafe_allow_html=True)
     st.write("ScreenGenie is ideal for job seekers at all levels, from fresh graduates to experienced professionals, looking to enhance their job applications and interview preparation.")
 
-    st.markdown("<div class='faq-header'>3. Is my data secure?</div>", unsafe_allow_html=True)
-    st.write("Yes, ScreenGenie does not store or share your data. All processing is done securely.")
+    st.markdown("<div class='faq-header'>3. What features does ScreenGenie provide?</div>", unsafe_allow_html=True)
+    st.write("ScreenGenie offers a range of features to help job seekers, including resume analysis, cover letter generation, ATS-friendly formatting tips, interview question generation, and a chatbot for career advice.")
 
     st.markdown("<div class='faq-header'>4. Can I use this for free?</div>", unsafe_allow_html=True)
     st.write("Yes, ScreenGenie is free to use!")
 
     st.markdown("<div class='faq-header'>5. What formats does ScreenGenie support for uploads?</div>", unsafe_allow_html=True)
-    st.write("You can upload your resume in PDF format for analysis and generating cover letters or interview questions.")
+    st.write("You can upload your resume in PDF format.")
 
-    st.markdown("<div class='faq-header'>6. How does the Cover Letter Generator work?</div>", unsafe_allow_html=True)
+    st.markdown("<div class='faq-header'>6. Can I generate a cover letter for any job?</div>", unsafe_allow_html=True)
+    st.write("Yes, ScreenGenie's Cover Letter Generator creates personalized letters for any role. Just upload your resume and input the job description, and the app will craft a tailored cover letter for you.")
+
+    st.markdown("<div class='faq-header'>7. How does the Cover Letter Generator work?</div>", unsafe_allow_html=True)
     st.write("Our Cover Letter Generator uses advanced AI to craft personalized and impactful cover letters. It considers your resume, the job description, and the company details to create a tailored cover letter that highlights your strengths.")
 
-    st.markdown("<div class='faq-header'>7. What format can I download the cover letter in?</div>", unsafe_allow_html=True)
+    st.markdown("<div class='faq-header'>8. What format can I download the cover letter in?</div>", unsafe_allow_html=True)
     st.write("You can download the cover letter as a Word document for easy editing.")
 
-    st.markdown("<div class='faq-header'>8. What is Resume Analysis, and how does it help me?</div>", unsafe_allow_html=True)
+    st.markdown("<div class='faq-header'>9. What is Resume Analysis, and how does it help me?</div>", unsafe_allow_html=True)
     st.write("The Resume Analysis feature reviews your uploaded resume and evaluates it against the job description. It highlights areas for improvement, missing skills, and formatting suggestions to optimize your resume for ATS systems and hiring managers.")
+
+    st.markdown("<div class='faq-header'>10. What is ATS, and why is formatting important?</div>", unsafe_allow_html=True)
+    st.write("ATS (Applicant Tracking System) is software used by recruiters to filter resumes. Proper formatting ensures your resume gets past the ATS filters and into the hands of hiring managers. ScreenGenie provides tips and templates to make your resume ATS-friendly.")
+
+    st.markdown("<div class='faq-header'>11. How does the Interview Question Generator work?</div>", unsafe_allow_html=True)
+    st.write("The Interview Question Generator uses AI to create role-specific questions based on the job description. It helps you prepare for interviews by providing practice questions and answers.")
+
+    st.markdown("<div class='faq-header'>12. What is the CareerBot?</div>", unsafe_allow_html=True)
+    st.write("The CareerBot is a chatbot that can help you with resume building, interview preparation, and career advice. It uses AI to answer questions and provide guidance.")
+
+    st.markdown("<div class='faq-header'>13. Who can benefit from ScreenGenie?</div>", unsafe_allow_html=True)
+    st.write("ScreenGenie is designed for job seekers at all levels, from fresh graduates to experienced professionals, looking to enhance their job applications and interview preparation.")
+
+
 
 # Contact Page
 elif page == "📞 Contact":
@@ -236,7 +244,7 @@ elif page == "📞 Contact":
         - 🌐 Website: [www.screengenie.com](https://www.screengenie.com)
         """
     )
-    st.image("https://media.giphy.com/media/xT0GqeSlGSRQutQWCA/giphy.gif", width=150)
+    st.image("Thank.jpg", width=150)
     st.success("We’re here to help!")
 
 elif page == "💬 Interview Question Generator":
@@ -261,8 +269,32 @@ elif page == "💬 Interview Question Generator":
                     file_name="interview_questions.docx",
                     mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                 )
+            st.balloons()
         else:
             st.warning("Please provide the job description for interview question generation.")
     else:
         st.warning("Please upload your resume for interview question generation.")
+
+elif page == "🤖 CareerBot":
+    st.header("🤖 CareerBot")
+
+    if "chat_history" not in st.session_state:
+        st.session_state.chat_history = []
+
+    user_prompt = st.chat_input("Ask...")
+
+    if user_prompt:
+        model = initialize_llm_pipeline()
+        response = model.invoke({"user":user_prompt})
+
+        st.session_state.chat_history.extend([
+            HumanMessage(content=user_prompt),
+            AIMessage(content=response.content)
+        ])
+
+        for chat in st.session_state.chat_history:
+            if isinstance(chat, HumanMessage):
+                st.chat_message("user").markdown(chat.content)
+            elif isinstance(chat, AIMessage):
+                st.chat_message("assistant").markdown(chat.content)
 

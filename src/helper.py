@@ -2,6 +2,10 @@
 import pymupdf4llm
 from docx import Document
 from io import BytesIO
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain.chains import LLMChain
+from src.prompt import chatbot_prompt
+from langchain.prompts import ChatPromptTemplate
 
 # Extracting text from PDF
 def extract_text_from_pdf(file):
@@ -32,4 +36,18 @@ def create_word_document(cover_letter):
     doc.save(byte_io)
     byte_io.seek(0)  # Go to the start of the stream
     return byte_io
-    
+
+
+def initialize_llm_pipeline():
+
+    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash")
+
+    prompt = ChatPromptTemplate.from_messages([
+        ("system", chatbot_prompt),
+        ("user", "{user}")
+    ])
+
+    llm_chain = prompt | llm
+
+    return llm_chain
+
