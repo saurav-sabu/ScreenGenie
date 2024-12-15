@@ -230,6 +230,9 @@ chatbot_prompt = """You are CareerBot, a professional virtual assistant speciali
 # User Input:
 {user}
 
+# Context:
+{context}
+
 Always respond with clear, professional, and actionable advice relevant to the user's career. If a query falls outside career-related topics, politely decline with a message like:
 'I specialize in career-related topics and cannot assist with this query.'
 

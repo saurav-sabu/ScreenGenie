@@ -278,23 +278,20 @@ elif page == "💬 Interview Question Generator":
 elif page == "🤖 CareerBot":
     st.header("🤖 CareerBot")
 
-    if "chat_history" not in st.session_state:
-        st.session_state.chat_history = []
+    if "chat_memory" not in st.session_state:
+        st.session_state.chat_memory = []
 
     user_prompt = st.chat_input("Ask...")
 
     if user_prompt:
         model = initialize_llm_pipeline()
-        response = model.invoke({"user":user_prompt})
+        response = model.invoke({"user": user_prompt,"context":st.session_state.chat_memory})
 
-        st.session_state.chat_history.extend([
-            HumanMessage(content=user_prompt),
-            AIMessage(content=response.content)
-        ])
+        # Append the interaction to the memory
+        st.session_state.chat_memory.append({"user": user_prompt, "assistant": response.content})
 
-        for chat in st.session_state.chat_history:
-            if isinstance(chat, HumanMessage):
-                st.chat_message("user").markdown(chat.content)
-            elif isinstance(chat, AIMessage):
-                st.chat_message("assistant").markdown(chat.content)
+        # Display chat history
+        for chat in st.session_state.chat_memory:
+            st.chat_message("user").markdown(chat["user"])
+            st.chat_message("assistant").markdown(chat["assistant"])
 
