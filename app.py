@@ -120,8 +120,8 @@ elif page == "📝 Cover Letter Generator":
     if uploaded_file:
         name = st.text_input("Your Name", placeholder="Enter your name")
         job_title = st.text_input("Job Title", placeholder="Enter the job title you're applying for")
-        company_name = st.text_input("Company Name", placeholder="Enter the company name")
-        job_description = st.text_area("Job Description", placeholder="Enter job description")
+        company_name = st.text_input("Company Name", placeholder="Enter the company name you're applying for")
+        job_description = st.text_area("Job Description", placeholder="Enter job description you're applying for")
         generate_btn = st.button("Generate Cover Letter")
 
         if generate_btn:
