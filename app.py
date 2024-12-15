@@ -141,7 +141,7 @@ elif page == "📝 Cover Letter Generator":
                 )
                 st.balloons()
     else:
-        st.warning("Please upload your resume for analysis first.")
+        st.warning("Please upload your resume for cover letter generation.")
 
 elif page == "🎨 Resume Generation":
     st.header("🎨 Resume Generation")
