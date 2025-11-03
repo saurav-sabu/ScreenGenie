@@ -80,7 +80,7 @@ if page == "🏠 Home":
         """
     )
     gif_url = "genie.gif"  # Replace with the direct URL of the GIF
-    st.image(gif_url, width=300, caption="ScreenGenie GIF",use_container_width=False)
+    st.image(gif_url, caption="ScreenGenie GIF",width='content')
 
 # Resume Analysis Page
 elif page == "📄 Resume Analysis":
