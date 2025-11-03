@@ -4,6 +4,4 @@ langchain-google-genai
 langchain-core
 python-dotenv
 pymupdf4llm
-pyautogen
-autogen-agentchat[gemini]~=0.2
 python-docx

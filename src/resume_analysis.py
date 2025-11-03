@@ -2,6 +2,9 @@
 from langchain_google_genai import GoogleGenerativeAI
 from src.prompt import resume_analysis_prompt_template
 from src.helper import extract_text_from_pdf
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Getting resume analysis
 def get_resume_analysis(resume_text,job_description):
@@ -10,7 +13,7 @@ def get_resume_analysis(resume_text,job_description):
     resume_data = extract_text_from_pdf(resume_text)
 
     # Creating a model
-    model = GoogleGenerativeAI(model="gemini-1.5-flash")
+    model = GoogleGenerativeAI(model="gemini-2.0-flash")
 
     # Creating a chain
     chain = resume_analysis_prompt_template | model 

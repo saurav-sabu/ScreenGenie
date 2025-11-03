@@ -3,6 +3,9 @@ from src.prompt import resume_formatting_prompt_template
 from src.helper import extract_text_from_pdf
 from langchain_google_genai import GoogleGenerativeAI
 from langchain_core.output_parsers import StrOutputParser
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Function to get ATS formatting tips
 def get_ats_formatting_tips(resume_data):

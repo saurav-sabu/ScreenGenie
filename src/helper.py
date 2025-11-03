@@ -3,9 +3,11 @@ import pymupdf4llm
 from docx import Document
 from io import BytesIO
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.chains import LLMChain
 from src.prompt import chatbot_prompt
-from langchain.prompts import ChatPromptTemplate
+from langchain_core.prompts import ChatPromptTemplate
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Extracting text from PDF
 def extract_text_from_pdf(file):

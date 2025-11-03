@@ -4,6 +4,9 @@ from src.prompt import resume_generation_prompt_template
 from src.helper import extract_text_from_pdf
 from docx import Document
 from io import BytesIO
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Function to create a word document
 def create_word_doc(content):
