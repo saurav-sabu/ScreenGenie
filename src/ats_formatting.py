@@ -14,7 +14,7 @@ def get_ats_formatting_tips(resume_data):
     resume_data = extract_text_from_pdf(resume_data)
 
     # Creating a model
-    model = GoogleGenerativeAI(model="gemini-2.0-flash")
+    model = GoogleGenerativeAI(model="gemini-1.5-flash")
 
     # Creating a chain
     chain = resume_formatting_prompt_template | model | StrOutputParser()
