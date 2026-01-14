@@ -28,7 +28,7 @@ def get_resume_generation(resume_text,job_description):
     resume_data = extract_text_from_pdf(resume_text)
 
     # Creating a model
-    model = GoogleGenerativeAI(model="gemini-1.5-flash")
+    model = GoogleGenerativeAI(model="gemini-2.5-flash")
 
     # Creating a chain
     chain = resume_generation_prompt_template | model 

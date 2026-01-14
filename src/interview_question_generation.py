@@ -14,7 +14,7 @@ def get_interview_questions(resume_data,job_description):
     resume_data = extract_text_from_pdf(resume_data)
 
     # Creating a model
-    model = GoogleGenerativeAI(model="gemini-1.5-flash")
+    model = GoogleGenerativeAI(model= "gemini-2.5-flash")
 
     # Creating a chain
     chain = interview_question_prompt_template | model | StrOutputParser()
