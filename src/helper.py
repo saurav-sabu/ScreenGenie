@@ -42,7 +42,7 @@ def create_word_document(cover_letter):
 
 def initialize_llm_pipeline():
 
-    llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash-exp")
+    llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash")
 
     prompt = ChatPromptTemplate.from_messages([
         ("system", chatbot_prompt),
