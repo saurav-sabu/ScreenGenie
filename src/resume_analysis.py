@@ -13,7 +13,7 @@ def get_resume_analysis(resume_text,job_description):
     resume_data = extract_text_from_pdf(resume_text)
 
     # Creating a model
-    model = GoogleGenerativeAI(model="gemini-2.0-flash-lite")
+    model = GoogleGenerativeAI(model="gemini-2.0-flash")
 
     # Creating a chain
     chain = resume_analysis_prompt_template | model 
